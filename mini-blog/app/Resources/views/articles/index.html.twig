@@ -1,17 +1,26 @@
 {% extends 'default.html.twig' %}
 
 {% block body%}
+<div style="margin: 5% 20%;">
+  <h2>Articles</h2 >
+  <br></br>
   <ul>
     {% for article in articles %}
       <li>
           <h4 style="display: inline-block;">{{article.title}}</h4>
           <a href="{{ path('article.view', {id: article.id}) }}">view</a>
           <a href="{{ path('article.edit', {id: article.id}) }}">edit</a>
+          <a href="{{ path('article.delete', {id: article.id}) }}">delete</a>
         <br></br>
       </li>
     {% endfor%}
   </ul>
+</div>
+<div style="margin: 5% 20%;">
+  <h2>Create new article</h2>
+  <br></br>
   {{form_start(form)}}
   {{form_widget(form)}}
   {{form_end(form)}}
+</div>
 {% endblock %}

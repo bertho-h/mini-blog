@@ -1,8 +1,11 @@
 {% extends 'default.html.twig' %}
 
 {% block body%}
+<div style="margin: 5% 20%;">
   <h2> Edit '{{article.title}}'</h2>
+  <br></br>
   {{form_start(form)}}
   {{form_widget(form)}}
   {{form_end(form)}}
+</div>
 {% endblock %}

@@ -1,7 +1,12 @@
 {% extends 'default.html.twig' %}
 
 {% block body%}
-  <h2>'{{article.title}}'</h2>
-  <h4>{{article.content}}</h4>
+<div style="margin: 5% 20%;">
+  <h2>- {{article.title}} -</h2>
+    <br></br>
+  <h4>"{{article.content}}"</h4>
+
+    <br></br>
   <a href="{{ path('article.index') }}">retour</a>
+</div>
 {% endblock %}
