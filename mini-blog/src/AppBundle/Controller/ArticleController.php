@@ -37,6 +37,16 @@ class ArticleController extends Controller {
     ]);
   }
 
+  /**
+*@Route("/articles/view/{id}", name="article.view")
+*@Method({"GET", "POST"})
+*/
+public function viewAction(Request $request, Article $article) {
+  return $this->render('articles/view.html.twig', [
+    'article' => $article
+  ]);
+}
+
 }
 
 ?>

@@ -1,0 +1,7 @@
+{% extends 'default.html.twig' %}
+
+{% block body%}
+  <h2>'{{article.title}}'</h2>
+  <h4>{{article.content}}</h4>
+  <a href="{{ path('article.index') }}">retour</a>
+{% endblock %}
