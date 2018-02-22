@@ -1,0 +1,12 @@
+{% extends 'default.html.twig' %}
+
+{% block body%}
+  <ul>
+    {% for article in articles %}
+      <li>
+          <h4 style="display: inline-block;">{{article.title}}</h4>
+        <br></br>
+      </li>
+    {% endfor%}
+  </ul>
+{% endblock %}
