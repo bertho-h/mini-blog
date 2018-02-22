@@ -47,6 +47,27 @@ public function viewAction(Request $request, Article $article) {
   ]);
 }
 
+
+  /**
+  *@Route("/articles/{id}", name="article.edit")
+  *@Method({"GET", "POST"})
+  */
+  public function editAction(Request $request, Article $article) {
+    $form = $this->createForm(ArticleType::class, $article);
+    $form->add('Edit', SubmitType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $this->getDoctrine()->getManager()->flush();
+      return $this->redirectToRoute('article.index');
+    }
+
+    return $this->render('articles/edit.html.twig', [
+      'form' => $form->createView(),
+      'article' => $article,
+    ]);
+  }
+
 }
 
 ?>

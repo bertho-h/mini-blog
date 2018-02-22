@@ -6,6 +6,7 @@
       <li>
           <h4 style="display: inline-block;">{{article.title}}</h4>
           <a href="{{ path('article.view', {id: article.id}) }}">view</a>
+          <a href="{{ path('article.edit', {id: article.id}) }}">edit</a>
         <br></br>
       </li>
     {% endfor%}
