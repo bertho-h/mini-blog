@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Article;
 use AppBundle\Form\ArticleType;
+use AppBundle\Entity\Commentaire;
+use AppBundle\Form\CommentaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ArticleController extends Controller {
@@ -42,8 +44,25 @@ class ArticleController extends Controller {
   *@Method({"GET", "POST"})
   */
   public function viewAction(Request $request, Article $article) {
+    $repository = $this->getDoctrine()->getRepository('AppBundle:Commentaire');
+    $commentaires = $repository->findAllWithArticle($article);
+
+    $commentaire = new Commentaire();
+    $form = $this->createForm(CommentaireType::class, $commentaire);
+    $form->add('Add', SubmitType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $commentaire->setArticle($article);
+      $entityManager->persist($commentaire);
+      $entityManager->flush();
+      return $this->redirectToRoute('article.view', array('id' => $article->getId()));
+    }
     return $this->render('articles/view.html.twig', [
-      'article' => $article
+      'commentaires' => $commentaires,
+      'article' => $article,
+      'form' => $form->createView()
     ]);
   }
 
@@ -74,6 +93,10 @@ class ArticleController extends Controller {
   */
   public function deleteAction(Request $request, Article $article) {
     $entityManager = $this->getDoctrine()->getManager();
+    $commentaires = $article->getCommentaires();
+    foreach ($commentaires as $commentaire) {
+      $entityManager->remove($commentaire);
+    }
     $entityManager->remove($article);
     $entityManager->flush();
     return $this->redirectToRoute('article.index');

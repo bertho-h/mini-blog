@@ -3,7 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Entity\Commentaire;
 
 /**
  * Article
@@ -13,6 +16,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Article
 {
+
+    /**
+    *@ORM\OneToMany(targetEntity="Commentaire", mappedBy="article")
+    */
+    private $commentaires;
+
+
     /**
      * @var int
      *
@@ -37,6 +47,13 @@ class Article
      * @ORM\Column(name="content", type="text")
      */
     private $content;
+
+
+
+    public function __construct()
+    {
+      $this->commentaires = new ArrayCollection();
+    }
 
 
     /**
@@ -87,6 +104,7 @@ class Article
         return $this;
     }
 
+
     /**
      * Get content
      *
@@ -95,5 +113,40 @@ class Article
     public function getContent()
     {
         return $this->content;
+    }
+
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Article
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     *@return Collection|Product[]
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }
