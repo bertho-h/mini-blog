@@ -14,13 +14,22 @@ class SecurityController extends Controller {
   *
   */
   public function loginAction() {
-      $utils = $this->get('security.authentication_utils');
-      $error = $utils->getLastAuthenticationError();
-      $lastUsername = $utils->getLastUserName();
-      return $this->render('security/login.html.twig', [
-        'username' => $lastUsername,
-        'error'=> $error
-      ]);
+    //Code that generates administrator user
+      // $user = new User;
+      // $em = $this->getDoctrine()->getManager();
+      // $user->setUsername('admin');
+      // $encoder = $this->get('security.password_encoder');
+      // $user->setPassword($encoder->encodePassword($user, 'admin'));
+      // $em->persist($user);
+      // $em->flush();
+
+    $utils = $this->get('security.authentication_utils');
+    $error = $utils->getLastAuthenticationError();
+    $lastUsername = $utils->getLastUserName();
+    return $this->render('security/login.html.twig', [
+      'username' => $lastUsername,
+      'error'=> $error
+    ]);
   }
 }
 
